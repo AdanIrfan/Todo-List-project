@@ -7,7 +7,7 @@
         this.priority = priority
     }
 
-    export function project(name){
+    function project(name){
         this.name = name;
         this.tasks = [];
 
@@ -68,19 +68,4 @@
     })();
 
 
-    export function createTask(name, description, status, date, priority){
-        const activity = task(name, description, status, date, priority);
-        
-        const selectProject = prompt("which project do you want to go");
-        
-        let matchedProject = projectManager.findProject(selectProject);
-           if(matchedProject){
-                matchedProject.addTask(activity);
-           }
-           else{
-                console.log("project does not exist");
-
-                let newProject = projectManager.addProject(selectProject);
-                newProject.addTask(activity);
-           }
-}
+    

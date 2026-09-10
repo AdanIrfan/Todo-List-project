@@ -1,5 +1,6 @@
 // index.js
 import "./styles.css";
-import { greeting } from "./greeting.js";
+import { domController } from "./domController.js";
 
-console.log(greeting);
+const dom = domController();
+dom.initializeDom();

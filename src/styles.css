@@ -1,0 +1,26 @@
+#app {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 70px 1fr;
+    min-height: 100vh;
+}
+
+#header {
+    grid-column: 1 / -1;
+}
+
+#sidebar {
+    grid-column: 1;
+    padding: 20px;
+}
+
+#main {
+    grid-column: 2;
+    padding: 20px;
+}
+
+#projects,
+#tasks {
+    list-style: none;
+    padding: 0;
+}

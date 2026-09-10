@@ -1,4 +1,4 @@
-    export function task(name, description, status, date, priority){
+export function task(name, description, status, date, priority){
         this.id = crypto.randomUUID();
         this.name = name;
         this.description = description;
@@ -36,14 +36,14 @@
 
     export const projectManager = (function(){
         let projects = [];
-        const defaultProject = project("default");
+        const defaultProject = new project("default");
         projects.push(defaultProject);
 
         const getProjects = () => projects;
 
         
         function addProject(type){
-            const newProject = project(type);
+            const newProject = new project(type);
             projects.push(newProject);
             return newProject;
         }
@@ -66,6 +66,3 @@
         }
         return {getProjects, addProject, removeProject, findProject};
     })();
-
-
-    

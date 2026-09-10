@@ -8,18 +8,33 @@
 <body>
         <div id = "app">
             <header id = "header">
-
+                <h1>Todo App</h1>
             </header>
+
             <aside id = "sidebar">
                 <h1>Projects</h1>
-                <ul class = "projects"></ul>
-                <button id = "addProject">+</button>
+                <ul id = "projects"></ul>
+                <button id = "addProject">Add project</button>
+                <dialog id = "dialogBox">
+                    <form id = "projectForm">
+
+                        <h1>Add Project</h1>
+                        
+                        <label for = "projectInput">Project Name</label>
+                        <input type = "text" id = "projectInput" placeholder="Enter the project name">
+                        
+                        <button type = "button" id = "closeButton">close</button>
+                        <button type = "submit" id = "submitButton">create</button>
+                    </form>
+                </dialog>
             </aside>
+
             <main id = "main">
-                <h1></h1>
-                <ul class = "tasks"></ul>
-                <button id = "addTask">+</button>
+                <h1 id = "projectName"></h1>
+                <ul id = "tasks"></ul>
+                <button id = "addTask">Add task</button>
             </main>
+
         </div>
 </body>
 </html>

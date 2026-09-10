@@ -1,4 +1,4 @@
-import { task, projectManager } from "./task";
+import { task, projectManager } from "./task.js";
     
     
     export function createTask(name, description, status, date, priority, projectName){
@@ -81,7 +81,4 @@ import { task, projectManager } from "./task";
         if(changes.priority){
             selectedTask.priority = changes.priority;
         }
-    }
-
-
-    
+}

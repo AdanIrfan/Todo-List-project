@@ -2,7 +2,7 @@ import { task, projectManager } from "./task.js";
     
     
     export function createTask(name, description, status, date, priority, projectName){
-        const activity = task(name, description, status, date, priority);
+        const activity = new task(name, description, status, date, priority);
         
         
         let matchedProject = projectManager.findProject(projectName);
@@ -15,7 +15,7 @@ import { task, projectManager } from "./task.js";
            }
     }
 
-    export function deletetask(taskId, projectName){
+    export function deleteTask(taskId, projectName){
         const selectedProject = projectManager.findProject(projectName);
         if(selectedProject === undefined){
             alert("project doesn't exist");

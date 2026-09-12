@@ -7,7 +7,7 @@ export function task(name, description, status, date, priority){
         this.priority = priority
     }
 
-    function project(name){
+export function project(name){
         this.name = name;
         this.tasks = [];
 
@@ -48,6 +48,14 @@ export function task(name, description, status, date, priority){
             return newProject;
         }
 
+        function restoreProject(savedProject){
+            projects.push(savedProject);
+        }
+
+        function replaceProjects(savedProjects){
+            projects = savedProjects;
+        }
+
         function removeProject(type){
             for(const project of projects){
                 if(project.name === type){
@@ -64,5 +72,5 @@ export function task(name, description, status, date, priority){
                 }
             } 
         }
-        return {getProjects, addProject, removeProject, findProject};
+        return {getProjects, addProject, removeProject, findProject, restoreProject, replaceProjects};
     })();

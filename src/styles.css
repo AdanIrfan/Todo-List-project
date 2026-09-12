@@ -131,6 +131,12 @@ li:focus-visible {
     background: rgba(255, 255, 255, 0.1);
 }
 
+#projects li.selected {
+    padding-left: 17px;
+    color: white;
+    background: var(--coral);
+}
+
 #tasks {
     display: grid;
     gap: 10px;
@@ -145,11 +151,15 @@ li:focus-visible {
     background: rgba(255, 253, 248, 0.55);
     border: 1px dashed var(--line);
     border-radius: 10px;
-    content: "No tasks here yet";
+    content: "No tasks in this project";
     text-align: center;
 }
 
 #tasks li {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
     padding: 18px 20px 18px 24px;
     color: var(--ink);
     background: var(--panel);
@@ -161,6 +171,41 @@ li:focus-visible {
     font-size: 1rem;
     font-weight: 700;
     transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+#tasks li[data-priority="high"] {
+    border-left-color: var(--coral);
+}
+
+#tasks li[data-priority="low"] {
+    border-left-color: var(--teal);
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--teal);
+}
+
+.task-name {
+    min-width: 0;
+}
+
+.task-details {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+#tasks li.completed .task-name {
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+#tasks li.completed {
+    opacity: 0.72;
 }
 
 #tasks li:hover {
@@ -326,5 +371,13 @@ dialog > #close {
 
     #main {
         padding: 36px 24px 60px;
+    }
+
+    #tasks li {
+        grid-template-columns: auto 1fr;
+    }
+
+    .task-details {
+        grid-column: 2;
     }
 }

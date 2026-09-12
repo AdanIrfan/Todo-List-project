@@ -15,6 +15,7 @@
                 const li = document.createElement("li");
                 li.textContent = projects[i].name;
                 li.dataset.project = projects[i].name;
+                li.classList.toggle("selected", currentProject.name === projects[i].name);
                 projectList.appendChild(li);
             }
 
@@ -28,13 +29,35 @@
             tasksDiv.textContent = "";
             
             projectNameDiv.textContent = project.name;
+            renderProjects(projectManager.getProjects());
             
             project.tasks.forEach(((task)=>{
                 const li = document.createElement("li");
                 li.dataset.id = task.id;
-                li.textContent = task.name;
+                li.classList.toggle("completed", task.status === "complete");
+                li.dataset.priority = task.priority;
+
+                const taskName = document.createElement("span");
+                taskName.className = "task-name";
+                taskName.textContent = task.name;
+                li.appendChild(taskName);
+
+                const taskDetails = document.createElement("span");
+                taskDetails.className = "task-details";
+                taskDetails.textContent = `${task.priority} priority | due ${task.date}`;
+                li.appendChild(taskDetails);
+
                 tasksDiv.appendChild(li);
+                const checkbox = document.createElement("input");
+                checkbox.setAttribute("type","checkbox");
+                checkbox.className = "task-checkbox";
+                checkbox.setAttribute("aria-label", `Mark ${task.name} complete`);
+                if(task.status === "complete"){
+                    checkbox.checked = true;
+                }
+                li.prepend(checkbox);
             }))
+
         }
 
         function initializeDom(){
@@ -43,6 +66,16 @@
             
             const defaultProject =projectManager.findProject("default")
             renderTasks(defaultProject);
+
+            document.getElementById("tasks").addEventListener("change", (e)=>{
+                if(e.target.type !== "checkbox"){
+                    return;
+                }
+                const taskId = e.target.parentElement.dataset.id;
+                const status = e.target.checked ? "complete" : "pending";
+                updateTask(currentProject.name, taskId, { status });
+                e.target.parentElement.classList.toggle("completed", e.target.checked);
+            });
             
             setupTaskEvents();
             setupProjectEvents();
@@ -74,10 +107,12 @@
             form.addEventListener("submit", (event)=>{
                 event.preventDefault();
                 const projectName =  document.getElementById("projectInput").value;
-                createProject(projectName);
-                const projects = projectManager.getProjects()
-                renderProjects(projects);
-                dialog.close();
+                if(createProject(projectName)){
+                    const projects = projectManager.getProjects()
+                    renderProjects(projects);
+                    form.reset();
+                    dialog.close();
+                }
             })
 
             const deleteBtn = document.getElementById("deleteProject");
@@ -107,20 +142,26 @@
 
             closeBtn.addEventListener("click", ()=>{
                 dialogBox.close();
+                form.reset();
             })
 
             form.addEventListener("submit", (e)=>{
                 e.preventDefault();
+                if(!form.checkValidity()){
+                    form.reportValidity();
+                    return;
+                }
                 const taskName = document.getElementById("taskName").value;
                 const taskDescription = document.getElementById("taskDescription").value;
-                const taskStatus = document.querySelector(`input[name="status"]:checked`).value;
+                const taskStatus = document.querySelector(`input[name="status"]:checked`)?.value;
                 const taskDate = document.getElementById("taskDate").value;
-                const taskPriority = document.querySelector(`input[name="priority"]:checked`).value;
+                const taskPriority = document.querySelector(`input[name="priority"]:checked`)?.value;
 
-                createTask(taskName, taskDescription, taskStatus, taskDate, taskPriority, currentProject.name);
-                renderTasks(currentProject);
-                dialogBox.close();
-                form.reset();
+                if(createTask(taskName, taskDescription, taskStatus, taskDate, taskPriority, currentProject.name)){
+                    renderTasks(currentProject);
+                    dialogBox.close();
+                    form.reset();
+                }
             })
         }
 
@@ -134,7 +175,11 @@
             let currentTask = {};
 
             tasksDiv.addEventListener("click", (event)=>{
-                const taskId = event.target.dataset.id;
+                if(event.target.type === "checkbox"){
+                    return;
+                }
+                const taskRow = event.target.closest("li");
+                const taskId = taskRow?.dataset.id;
                 if(taskId === undefined){
                     return;
                 }
@@ -178,15 +223,19 @@
                 document.querySelector(`input[name="editPriority"][value="${currentTask.priority}"]`).checked = true;
             })
             
-            const saveBtn = document.getElementById("editSave");
-            saveBtn.addEventListener("click",(e)=>{
+            const editForm = document.getElementById("editForm");
+            editForm.addEventListener("submit",(e)=>{
                 e.preventDefault();
+                if(!editForm.checkValidity()){
+                    editForm.reportValidity();
+                    return;
+                }
                 
                 const editName = document.getElementById("editName").value;
                 const editDescription = document.getElementById("editDescription").value;
-                const editStatus = document.querySelector(`input[name="editStatus"]:checked`).value;
+                const editStatus = document.querySelector(`input[name="editStatus"]:checked`)?.value;
                 const editDate = document.getElementById("editDate").value;
-                const editPriority = document.querySelector(`input[name="editPriority"]:checked`).value;
+                const editPriority = document.querySelector(`input[name="editPriority"]:checked`)?.value;
                 
                 const change = {
                     name: editName,
@@ -200,17 +249,19 @@
                 const projectName = currentProject.name;
                 const taskId = currentTask.id;
                 
-                updateTask(projectName, taskId, change);
-                renderTasks(currentProject);
-                editDialog.close();
+                if(updateTask(projectName, taskId, change)){
+                    renderTasks(currentProject);
+                    editDialog.close();
+                }
             })
 
             const exitBtn = document.getElementById("closeEdit");
             exitBtn.addEventListener("click", ()=>{
                 editDialog.close();
             })
-            
+
         }
+
 
 
         return {initializeDom};

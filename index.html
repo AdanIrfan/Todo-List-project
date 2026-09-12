@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script defer src="main.js"></script></head>
+<body>
+        <div id = "app">
+            <header id = "header">
+                <h1>Todo App</h1>
+            </header>
+
+            <aside id = "sidebar">
+                <h1>Projects</h1>
+                <ul id = "projects"></ul>
+                <button id = "addProject">Add project</button>
+                <button id = "deleteProject">Remove project</button>
+                <dialog id = "dialogBox">
+                    <form id = "projectForm">
+
+                        <h1>Add Project</h1>
+                        
+                        <label for = "projectInput">Project Name</label>
+                        <input type = "text" id = "projectInput" placeholder="Enter the project name" required>
+                        
+                        <button type = "button" id = "closeButton">close</button>
+                        <button type = "submit" id = "submitButton">create</button>
+                    </form>
+                </dialog>
+            </aside>
+
+            <main id = "main">
+                <h1 id = "projectName"></h1>
+                <ul id = "tasks"></ul>
+
+                <dialog id = "taskDialog">
+                    <form id = "taskForm">
+                        <h1>Add task</h1>
+
+                        <label for = "taskName">Task</label>
+                        <input type = "text" id = "taskName" required>
+                        <label for = "taskdescription">Description</label>
+                        <input type = "text" id = "taskDescription">
+
+                        <legend>Status:</legend>
+                        <fieldset>
+                            <input type = "radio" id = "complete" name = "status" value = "complete" required>
+                            <label for = "complete">Complete</label>
+                            <input type = "radio" id = "pending" name = "status" value = "pending">
+                            <label for = "pending">Pending</label>
+                        </fieldset>
+
+                        <label for = "taskDate">Due Date:</label>
+                        <input type ="date" id = "taskDate" required>
+                        
+                        <legend>Priority</legend>
+                        <fieldset>
+                            <input type = "radio" id = "high" name="priority" value="high" required>
+                            <label for = "high">Hight</label>
+                            <input type = "radio" id = "Medium" name="priority" value="medium" >
+                            <label for = "Medium">Medium</label>
+                            <input type = "radio" id = "Low" name="priority" value="low">
+                            <label for = "Low">Lowt</label>
+                        </fieldset>
+                        
+                        <button type="submit">Create task</button>
+                        <button type="button" id="closeBtn">Cancel</button>
+                    </form>
+                </dialog>
+
+                <dialog id = "dialogTaskDisplay">
+                    <h1>Task:</h1>
+                    <h3 id = "displayName"></h3>
+                    <p id = "displayDescription"></p>
+                    <p id = "displayStatus"></p>
+                    <p id = "displayDate"></p>
+                    <p id = "displayPriority"></p>
+
+                    <button type = "button" id = "close">close</button>
+                    <button type = "button" id = "edit">edit</button>
+                    <button type = "button" id = "delete">delete</button>
+                </dialog>
+
+                <dialog id = "editDialog">
+                    <form id = "editForm">
+                        <h1>Edit task</h1>
+
+                        <label for = "editName">Task</label>
+                        <input type = "text" id = "editName" required>
+                        <label for = "editDescription">Description</label>
+                        <input type = "text" id = "editDescription">
+
+                        <legend>Status:</legend>
+                        <fieldset>
+                            <input type = "radio" id = "editComplete" name = "editStatus" value = "complete" required>
+                            <label for = "editComplete">Complete</label>
+                            <input type = "radio" id = "editPending" name = "editStatus" value = "pending">
+                            <label for = "editPending">Pending</label>
+                        </fieldset>
+
+                        <label for = "editDate">Due Date:</label>
+                        <input type ="date" id = "editDate" required>
+                        
+                        <legend>Priority</legend>
+                        <fieldset>
+                            <input type = "radio" id = "editHigh" name="editPriority" value="high" required>
+                            <label for = "editHigh">Hight</label>
+                            <input type = "radio" id = "editMedium" name="editPriority" value="medium" >
+                            <label for = "editMedium">Medium</label>
+                            <input type = "radio" id = "editLow" name="editPriority" value="low">
+                            <label for = "editLow">Lowt</label>
+                        </fieldset>
+                        
+                        <button type="submit" id = "editSave">Edit</button>
+                        <button type="button" id="closeEdit">Cancel</button>
+                    </form>
+                </dialog>
+
+                <button id = "addTask">Add task</button>
+            </main>
+
+        </div>
+</body>
+</html>
